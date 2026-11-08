@@ -40,7 +40,7 @@ ZFS is used for the primary local storage design, with redundancy appropriate to
 
 ### Local AI platform
 
-A separate machine is being prepared as the foundation for **Jarvis**, the local-AI platform. The initial build is planned around a Ryzen 7 3700X and RTX 3070, with the design leaving room to expand GPU capability later if the workloads justify it.
+The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
 
 ## At a glance
 
@@ -57,8 +57,8 @@ A separate machine is being prepared as the foundation for **Jarvis**, the local
 | Container management | Docker + Portainer |
 | Networking | OPNsense + managed switching + UniFi edge/network services |
 | Backups | Backup redesign in progress, with Proxmox Backup Server planned for fuller deployment |
-| Monitoring | Existing monitoring plus broader health/notification work in progress |
-| Local AI | Dedicated Jarvis server being planned and prepared |
+| Monitoring | Uptime Kuma availability checks, with broader observability planned |
+| Local AI | GPU-backed Jarvis pilot running |
 | Documentation | Private GitHub + Obsidian knowledge base with this sanitized public view |
 
 ## Architecture overview
@@ -69,10 +69,10 @@ flowchart LR
     Edge --> Firewall[OPNsense]
     Firewall --> LAN[Managed LAN]
 
-    LAN --> PVE[Proxmox VE\nPrimary Compute]
+    LAN --> PVE[Proxmox VE Primary Compute]
     LAN --> Storage[Shared / Bulk Storage]
-    LAN --> Backup[Backup Platform\nIn Progress]
-    LAN --> AI[Jarvis AI Server\nPlanned]
+    LAN --> Backup[Backup Platform in Progress]
+    LAN --> AI[Jarvis Local AI Pilot]
 
     PVE --> AD[Active Directory / DNS]
     PVE --> Files[SMB File Services]
@@ -150,7 +150,7 @@ flowchart LR
     Library --> Jellyfin[Jellyfin]
 ```
 
-A separate lifecycle-management project is being developed to safely clean up remote torrents only after transfer, import, retention, and seeding requirements are proven satisfied.
+Automatic remote cleanup remains paused pending report-only validation of transfer, import, retention, and seeding checks.
 
 ## Photos and personal media
 
@@ -168,7 +168,7 @@ A dedicated Docker environment hosts much of the media automation stack and rela
 
 Backup architecture is currently being redesigned.
 
-A dedicated **Proxmox Backup Server** platform is part of the target design, but it will not be treated as production-ready until storage, schedules, retention, and restores are actually validated.
+Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
 
 The broader goal is to reduce the number of overlapping backup tools while improving confidence that important systems can be restored when needed.
 
@@ -176,7 +176,7 @@ Historical virtual-machine backups are also being archived and cleaned up as the
 
 ## Monitoring and observability
 
-Monitoring is being expanded beyond simple up/down checks.
+Uptime Kuma has received recurring health signals for selected infrastructure and services. Controlled outage detection and notification delivery still need end-to-end testing.
 
 The long-term view includes visibility into:
 
@@ -195,7 +195,7 @@ A consolidated dashboard is planned so the state of the lab can be understood wi
 
 ## Jarvis / local AI
 
-One of the larger upcoming projects is **Jarvis**, a dedicated local-AI platform.
+Offline testing showed that a model can label simulated results as live even when the output follows a schema. Live read-only integrations depend on an independent check that derives the source from trusted runtime metadata and rejects results of uncertain origin.
 
 The first phase is focused on establishing the hardware and software foundation. Longer term, Jarvis is intended to become more than a Home Lab chatbot.
 
@@ -233,11 +233,11 @@ The detailed knowledge base remains private. This repository is a deliberately s
 
 ### Backup redesign / PBS
 
-Preparing storage and recovery strategy before Proxmox Backup Server is considered fully deployed.
+Validating storage setup and recovery before relying on Proxmox Backup Server.
 
 ### qBittorrent lifecycle management
 
-Building safe torrent cleanup logic that can prove transfer/import/seeding conditions before any automatic deletion is allowed. Development is intentionally starting in report-only mode.
+Building safe torrent cleanup logic that can prove transfer/import/seeding conditions before any automatic deletion is allowed. Automatic remote deletion remains paused pending a successful report-only run that validates the required evidence for an eligible payload.
 
 ### Monitoring and notifications
 
@@ -249,7 +249,7 @@ Building this repository into a useful technical overview while keeping operatio
 
 ## Planned services and improvements
 
-- **Jarvis** — dedicated local AI and automation platform
+- **Jarvis integrations** — controlled infrastructure access after offline validation
 - **Homarr** — unified Home Lab dashboard
 - **Bazarr** — subtitle automation
 - **Seerr** — media request management

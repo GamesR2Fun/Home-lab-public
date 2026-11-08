@@ -1,6 +1,6 @@
 # Publication Safety Checklist
 
-Use this checklist before changing this repository from private to public and before adding major new content later.
+Use this checklist before publishing updates to this repository.
 
 ## Repository history
 
@@ -32,8 +32,8 @@ Use this checklist before changing this repository from private to public and be
 
 - [ ] Browse the repository as if you were an unknown internet visitor.
 - [ ] Check README, all Markdown files, images, attachments, Actions logs, issues, pull requests, and releases.
-- [ ] Search the repo for common sensitive patterns such as `172.`, `192.168.`, `10.`, `token`, `password`, `secret`, `key`, `vpn`, `http://`, and `https://` and manually review every match.
-- [ ] Confirm repository visibility is still **Private** until this review is complete.
-- [ ] Only then change visibility to **Public**.
+- [ ] Scan the complete proposed public diff for credential formats, IP addresses, internal names, account identifiers, access URLs, and filesystem paths. Review each match in context.
+- [ ] Compare public claims with verified evidence. Label planned work and unresolved checks.
+- [ ] Verify affected links and diagrams and confirm the reviewed commit is on the intended public branch.
 
 > The goal is not to remove all technical detail. The goal is to publish enough architecture and project information to be useful while keeping operational access, security, identity, and private infrastructure data out of the public record.

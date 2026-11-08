@@ -83,7 +83,7 @@ The Immich project is still evolving as older media collections are cleaned up a
 | Jellyfin troubleshooting integration | Current | Scoped read-only diagnostic access to Jellyfin logs |
 | Obsidian + GitHub | Current | Private Home Lab documentation platform |
 | Automated documentation review | Current / Evolving | Helps compare recent work against maintained documentation |
-| Uptime monitoring | Current | Basic service availability monitoring |
+| Uptime Kuma | Current | Availability and heartbeat monitoring for selected systems and services |
 
 ### Documentation platform
 
@@ -105,23 +105,27 @@ This public repository is a separate, sanitized summary and intentionally does n
 
 The backup project is focused on reducing overlapping backup approaches and replacing them with a simpler, better-tested recovery model.
 
-Proxmox Backup Server is part of the target design, but it will not be considered complete until restores are proven.
+Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
 
 ### qBittorrent lifecycle management
 
 Remote cleanup is being approached conservatively. The goal is to automatically remove completed remote data only when the system can prove the content was transferred, imported, retained locally, and satisfied required seeding conditions.
 
-Development begins in report-only mode before any destructive behavior is enabled.
+Automatic remote deletion remains paused pending a successful report-only run that validates the required evidence for an eligible payload.
 
 ### Monitoring and notifications
 
 The lab is moving toward broader visibility into host health, services, storage, media playback, transfers, backups, networking, and GPU utilization.
 
+### Jarvis pilot
+
+The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
+
 ## Planned
 
 | Service / Project | Goal |
 | --- | --- |
-| Jarvis local-AI server | Dedicated GPU-backed local AI and automation platform |
+| Jarvis read-only integrations | Constrained infrastructure data access after offline safety checks |
 | Homarr | Unified Home Lab dashboard |
 | Bazarr | Subtitle automation |
 | Seerr | Media request management |
@@ -130,9 +134,7 @@ The lab is moving toward broader visibility into host health, services, storage,
 | Expanded monitoring | Storage, media, networking, transfer, backup, GPU, and service-health visibility |
 | Improved restore testing | Repeatable validation that backups can actually be recovered |
 
-### Jarvis
-
-Jarvis is planned as a dedicated local-AI system rather than a single application.
+### Jarvis capabilities
 
 The long-term direction includes:
 

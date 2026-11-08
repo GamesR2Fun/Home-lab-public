@@ -10,10 +10,10 @@ flowchart TB
     Edge --> FW[OPNsense]
     FW --> Core[Managed LAN]
 
-    Core --> Compute[Proxmox VE\nPrimary Compute]
+    Core --> Compute[Proxmox VE Primary Compute]
     Core --> Storage[Shared / Bulk Storage]
-    Core --> Backup[Backup Platform\nIn Progress]
-    Core --> AI[Jarvis / Local AI\nPlanned]
+    Core --> Backup[Backup Platform in Progress]
+    Core --> AI[Jarvis Local AI Pilot]
 
     Compute --> Identity[Active Directory / DNS]
     Compute --> Files[SMB File Services]
@@ -71,7 +71,7 @@ The media pipeline intentionally separates management, acquisition, transfer, st
 flowchart LR
     Requests[Wanted Media] --> Sonarr[Sonarr / Radarr]
     Sonarr --> Prowlarr[Prowlarr]
-    Prowlarr --> QBT[qBittorrent\nRemote]
+    Prowlarr --> QBT[Remote qBittorrent]
     QBT --> Seed[Remote Seeding]
     QBT --> Rclone[rclone]
     Rclone --> Import[Local Import]
@@ -81,7 +81,7 @@ flowchart LR
 
 This keeps download activity away from the primary media server while still allowing completed content to flow into local storage in a controlled way.
 
-A separate lifecycle-management project is being developed to determine when remote downloads are truly safe to remove. Cleanup will only be considered trustworthy when transfer, import, local retention, and seeding conditions can be verified.
+Automatic remote deletion remains paused pending a successful report-only run that validates the required evidence for an eligible payload. The checks cover transfer, import, local retention, shared payloads, and seeding requirements.
 
 ## Identity and file services
 
@@ -103,19 +103,13 @@ The photo-management portion of the lab is still evolving as older collections a
 
 The backup design is intentionally being rebuilt rather than simply layering another tool on top of the existing environment.
 
-A dedicated Proxmox Backup Server platform is part of the target design. The project will only be considered complete after the following are validated:
-
-- Storage is available and appropriate for backup workloads.
-- Backup jobs run successfully.
-- Retention behavior is understood.
-- Important workloads can actually be restored.
-- Recovery procedures are documented and repeatable.
+Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
 
 The design goal is fewer overlapping backup systems and greater confidence in recovery.
 
 ## Monitoring direction
 
-The lab currently has basic monitoring capabilities, but the target is a broader health view covering compute, storage, media, networking, transfers, backups, and GPU usage.
+Uptime Kuma has received recurring health signals for selected infrastructure and services. Controlled outage detection and notification delivery still need end-to-end testing.
 
 A future consolidated dashboard is expected to combine selected information such as:
 
@@ -131,9 +125,9 @@ A future consolidated dashboard is expected to combine selected information such
 
 ## Local AI direction
 
-A dedicated GPU-backed AI server is planned as the foundation for Jarvis.
+The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
 
-The first phase is infrastructure-focused: establish the compute platform, local models, and controlled access to Home Lab information.
+Offline testing showed that a model can label simulated results as live even when the output follows a schema. Live read-only integrations depend on an independent check that derives the source from trusted runtime metadata and rejects results of uncertain origin.
 
 Longer-term goals include:
 
@@ -153,7 +147,7 @@ The detailed Home Lab knowledge base is maintained privately in Obsidian and Git
 
 The documentation is treated as part of the infrastructure itself. It records current state, planned work, historical changes, troubleshooting evidence, architecture decisions, rebuild procedures, and verification gaps.
 
-This public repository is a manually reviewed derivative intended for sharing. It is not automatically synchronized from the private knowledge base.
+This public repository contains summaries reviewed for evidence and privacy before publication.
 
 ## Design principles
 

@@ -8,17 +8,7 @@ The public roadmap is grouped by **Now / Next / Later / Evaluation / Done**. Ite
 
 ### Backup redesign / Proxmox Backup Server
 
-The lab is moving toward a simpler backup architecture centered on Proxmox Backup Server.
-
-Current focus:
-
-- Free and prepare appropriate backup storage
-- Reduce dependence on overlapping legacy backup methods
-- Define retention and recovery expectations
-- Build restore testing into the design
-- Protect newer workloads, including the photo-management stack
-
-The project will not be considered complete just because backup jobs run. A real restore test is part of the finish line.
+Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
 
 ### qBittorrent lifecycle management
 
@@ -33,15 +23,14 @@ Current focus:
 - Detect shared/cross-seeded files before removal
 - Fail closed when any required evidence is missing
 
-The cleanup design is intentionally progressing through read-only/report-only validation before automatic deletion is considered.
+Automatic remote deletion remains paused pending a successful report-only run that validates the required evidence for an eligible payload.
 
 ### Monitoring, health checks, and notifications
 
-The monitoring strategy is expanding beyond simple uptime checks into layered observability.
+Uptime Kuma has received recurring health signals for selected infrastructure and services. Controlled outage detection and notification delivery still need end-to-end testing.
 
 Target responsibilities include:
 
-- **Uptime Kuma** for service reachability
 - **Healthchecks** for scheduled-job/dead-man monitoring
 - **Grafana / Prometheus / Loki / Alloy** for metrics, logs, and troubleshooting telemetry
 - **Scrutiny** for disk-health history where hardware support is suitable
@@ -52,7 +41,7 @@ The goal is useful, deduplicated alerts rather than every service sending its ow
 
 ### Photo/video migration and organization
 
-Immich is deployed and the migration of existing photo/video collections is underway.
+Immich is deployed and the initial imports are complete. Reconcile import counts, metadata, and playback before considering source cleanup.
 
 Current work includes:
 
@@ -68,29 +57,13 @@ This repository is being developed into a slower-moving, shareable snapshot of t
 
 ## Next
 
-### Jarvis local-AI server
+### Jarvis read-only integrations
 
-Build the first dedicated GPU-backed local-AI host.
+The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
 
-Planned initial hardware:
+Offline testing showed that a model can label simulated results as live even when the output follows a schema. Live read-only integrations depend on an independent check that derives the source from trusted runtime metadata and rejects results of uncertain origin.
 
-| Component | Planned |
-| --- | --- |
-| CPU | AMD Ryzen 7 3700X |
-| RAM | 32 GB DDR4 |
-| GPU | RTX 3070 8 GB |
-| Role | 24/7 local AI / automation platform |
-
-Initial software/platform goals:
-
-- Local model serving with Ollama or an equivalent runtime
-- Open WebUI or similar local interface
-- Local access to synchronized Home Lab documentation
-- A derived RAG/vector index such as Qdrant
-- Read-only infrastructure integrations first
-- Narrow, approved automation capabilities later
-
-Performance with the first RTX 3070 will be measured before deciding whether additional GPU hardware is worthwhile.
+The local interface and document retrieval are future milestones. Sustained workload tests will inform any additional GPU purchase.
 
 ### Automation foundation
 
@@ -166,8 +139,8 @@ New applications should fill a real gap rather than simply increasing service co
 
 ### Planned test/specialized guests
 
-- **Jellyfin-Test** — separate environment for upgrades, plugins, and configuration experiments before production rollout
-- **Servarr-Anime** — separate Anime-focused Arr stack so Anime-specific behavior can evolve independently of the main stack
+- **Jellyfin test environment** — separate environment for upgrades, plugins, and configuration experiments before production rollout
+- **Anime-focused Arr stack** — separate deployment for testing anime-specific import and organization
 
 ### Homarr dashboard
 
@@ -314,9 +287,9 @@ Migrated Home Lab operational documentation into a private GitHub-backed Obsidia
 
 Added narrow, read-only Jellyfin troubleshooting access as the first proven model for AI-assisted diagnostics without unrestricted server access.
 
-### Dad-Lab environment
+### Local AI inference pilot
 
-Created a separated virtualization area for family lab workloads.
+Verified GPU passthrough and GPU-backed Ollama inference in a dedicated virtualized environment.
 
 ## Roadmap philosophy
 
