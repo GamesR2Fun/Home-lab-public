@@ -40,7 +40,7 @@ ZFS is used for the primary local storage design, with redundancy appropriate to
 
 ### Local AI platform
 
-The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
+The local AI pilot runs Ollama in an Ubuntu VM with GPU passthrough, with GPU-backed inference verified. Evaluation now includes isolated fault scenarios using constrained read-only diagnostic checks. Completed scenario runs include healthy reset checks, but diagnostic answers still contain material errors; these results do not establish production readiness or unattended reliability.
 
 ## At a glance
 
@@ -168,7 +168,7 @@ A dedicated Docker environment hosts much of the media automation stack and rela
 
 Backup architecture is currently being redesigned.
 
-Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
+Proxmox Backup Server has a registered datastore, and storage access plus core backup services recovered successfully after a controlled reboot. This validates platform setup, not production backup protection. Hypervisor integration, backup jobs, retention, integrity verification, isolated restores, and behavior during storage loss remain unverified.
 
 The broader goal is to reduce the number of overlapping backup tools while improving confidence that important systems can be restored when needed.
 

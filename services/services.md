@@ -105,7 +105,7 @@ This public repository is a separate, sanitized summary and intentionally does n
 
 The backup project is focused on reducing overlapping backup approaches and replacing them with a simpler, better-tested recovery model.
 
-Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
+Proxmox Backup Server has a registered datastore, and storage access plus core backup services recovered successfully after a controlled reboot. This validates platform setup, not production backup protection. Hypervisor integration, backup jobs, retention, integrity verification, isolated restores, and behavior during storage loss remain unverified.
 
 ### qBittorrent lifecycle management
 
@@ -119,7 +119,7 @@ The lab is moving toward broader visibility into host health, services, storage,
 
 ### Jarvis pilot
 
-The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
+The local AI pilot runs Ollama in an Ubuntu VM with GPU passthrough, with GPU-backed inference verified. Evaluation now includes isolated fault scenarios using constrained read-only diagnostic checks. Completed scenario runs include healthy reset checks, but diagnostic answers still contain material errors; these results do not establish production readiness or unattended reliability.
 
 ## Planned
 

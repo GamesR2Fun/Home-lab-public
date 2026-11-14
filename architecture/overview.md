@@ -103,7 +103,7 @@ The photo-management portion of the lab is still evolving as older collections a
 
 The backup design is intentionally being rebuilt rather than simply layering another tool on top of the existing environment.
 
-Proxmox Backup Server can see the intended backup storage. Filesystem setup, a persistent mount, and datastore registration still need verification. Backup jobs, retention, integrity checks, and isolated restores remain open.
+Proxmox Backup Server has a registered datastore, and storage access plus core backup services recovered successfully after a controlled reboot. This validates platform setup, not production backup protection. Hypervisor integration, backup jobs, retention, integrity verification, isolated restores, and behavior during storage loss remain unverified.
 
 The design goal is fewer overlapping backup systems and greater confidence in recovery.
 
@@ -125,7 +125,7 @@ A future consolidated dashboard is expected to combine selected information such
 
 ## Local AI direction
 
-The Jarvis pilot runs Ollama in an Ubuntu VM with GPU passthrough. GPU-backed inference has been verified. Infrastructure tool tests remain offline.
+The local AI pilot runs Ollama in an Ubuntu VM with GPU passthrough, with GPU-backed inference verified. Evaluation now includes isolated fault scenarios using constrained read-only diagnostic checks. Completed scenario runs include healthy reset checks, but diagnostic answers still contain material errors; these results do not establish production readiness or unattended reliability.
 
 Offline testing showed that a model can label simulated results as live even when the output follows a schema. Live read-only integrations depend on an independent check that derives the source from trusted runtime metadata and rejects results of uncertain origin.
 
